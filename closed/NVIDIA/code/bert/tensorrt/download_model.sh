@@ -17,6 +17,6 @@ source code/common/file_downloads.sh
 
 MODEL=bert
 
-download_file models ${MODEL} https://zenodo.org/record/3733910/files/model.onnx?download=1 bert_large_v1_1.onnx
-download_file models ${MODEL} https://zenodo.org/record/3750364/files/bert_large_v1_1_fake_quant.onnx?download=1 bert_large_v1_1_fake_quant.onnx
+download_file models ${MODEL} https://models-and-datasets.tos-cn-beijing.volces.com/mlperf-bert-inference/model.onnx bert_large_v1_1.onnx
+download_file models ${MODEL} https://models-and-datasets.tos-cn-beijing.volces.com/mlperf-bert-inference/bert_large_v1_1_fake_quant.onnx bert_large_v1_1_fake_quant.onnx
 download_file models ${MODEL} https://zenodo.org/record/3750364/files/vocab.txt?download=1 vocab.txt

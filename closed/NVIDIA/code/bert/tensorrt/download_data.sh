@@ -21,5 +21,5 @@ if [ -e ${DATA_DIR}/squad/dev-v1.1.json ]
 then
     echo "Dataset for BERT already exists!"
 else
-    download_file data squad https://github.com/rajpurkar/SQuAD-explorer/raw/master/dataset/dev-v1.1.json dev-v1.1.json
+    download_file data squad https://models-and-datasets.tos-cn-beijing.volces.com/mlperf-bert-inference/dev-v1.1.json dev-v1.1.json
 fi
