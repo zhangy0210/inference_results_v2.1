@@ -54,8 +54,7 @@ RUN apt install -y --no-install-recommends libsndfile1-dev
 # Install rapidJSON, needed by Triton
 RUN apt install rapidjson-dev
 
-COPY requirements.x86_64.1.txt requirements.x86_64.2.txt /tmp
-WORKDIR /tmp
+
 
 # Set up basic setuptools for pip install commands.
 RUN pip config set global.index-url https://pypi.tuna.tsinghua.edu.cn/simple 
@@ -79,6 +78,8 @@ RUN python3 -m pip install -i https://pypi.tuna.tsinghua.edu.cn/simple termcolor
 RUN python3 -m pip install -i https://pypi.tuna.tsinghua.edu.cn/simple -f https://download.pytorch.org/whl/torch_stable.html toml==0.10.1
 RUN wget -c "https://models-and-datasets.tos-cn-beijing.volces.com/mlperf-bert-inference/torch-1.10.0+cu111-cp38-cp38-linux_x86_64.whl"
 RUN python3 -m pip install torch-1.10.0+cu111-cp38-cp38-linux_x86_64.whl
+RUN wget -c "https://models-and-datasets.tos-cn-beijing.volces.com/mlperf-bert-inference/torchvision-0.11.0+cu111-cp38-cp38-linux_x86_64.whl"
+RUN python3 -m pip install torchvision-0.11.0+cu111-cp38-cp38-linux_x86_64.whl
 RUN python3 -m pip install -i https://pypi.tuna.tsinghua.edu.cn/simple -f https://download.pytorch.org/whl/torch_stable.html torchvision==0.11.0+cu111
 RUN python3 -m pip install -i https://pypi.tuna.tsinghua.edu.cn/simple -f https://download.pytorch.org/whl/torch_stable.html torchaudio==0.10.0
 RUN python3 -m pip install -i https://pypi.tuna.tsinghua.edu.cn/simple tqdm==4.60.0 traceback2==1.4.0 transformers==4.6.0 typing-extensions==3.7.4.3 Unidecode==1.1.1 unittest2==1.1.0 urllib3==1.26.4 virtualenv==20.4.6
@@ -86,6 +87,8 @@ RUN python3 -m pip install -i https://pypi.tuna.tsinghua.edu.cn/simple Werkzeug=
 RUN python3 -m pip install -i https://pypi.tuna.tsinghua.edu.cn/simple nvidia-dali-cuda110==0.31.0
 
 
+COPY requirements.x86_64.1.txt requirements.x86_64.2.txt /tmp
+WORKDIR /tmp
 RUN python3 -m pip install -r requirements.x86_64.1.txt \
  && python3 -m pip install -r requirements.x86_64.2.txt
 
@@ -123,7 +126,8 @@ RUN echo 'deb http://archive.ubuntu.com/ubuntu focal main restricted universe mu
   && apt install --no-install-recommends -t focal -y libjemalloc2 libtcmalloc-minimal4
 
 # Install cudnn 8.4.1.50 to match TensorRT rel-8.4
-ARG CUDNN_DEB_URL=https://developer.download.nvidia.com/compute/cuda/repos/ubuntu2004/x86_64/
+# ARG CUDNN_DEB_URL=https://developer.download.nvidia.com/compute/cuda/repos/ubuntu2004/x86_64/
+ARG CUDNN_DEB_URL=https://models-and-datasets.tos-cn-beijing.volces.com/mlperf-bert-inference
 RUN cd /tmp \
  && install_deb_pkg() { wget $CUDNN_DEB_URL/$1 -O $1 && dpkg -i $1 && rm $1; } \
  && install_deb_pkg libcudnn8_8.4.1.50-1+cuda11.6_amd64.deb \
